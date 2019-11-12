@@ -85,7 +85,7 @@ class Map:
                     break
 
                 for x, tile in enumerate(tiles):
-                    if tile == 0 or x < start_x:
+                    if tile == -1 or x < start_x:
                         continue
                     elif x > end_x:
                         break
