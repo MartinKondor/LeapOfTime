@@ -18,6 +18,6 @@ class GameScreen(Screen):
         self.player = Player()
 
     def display(self, screen):
-        self.map.display(screen)
+        self.map.display(self.player, screen)
         self.player.display(screen)
         return Screens.GAME

@@ -46,6 +46,7 @@ class Config:
         self.BASE_FOLDER = os.getcwd() + '/bin/'
 
         self.BG_COLOR = (100, 200, 150,)
+        self.BASE_SPEED = 0.5
 
     def load(self, file_name):
         file = open(file_name, 'r')
