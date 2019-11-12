@@ -1,6 +1,16 @@
 # leap-of-time
 Leap of time is a small python based game.
 
+## Usage
+
+To run the game you just need to run the
+
+```
+python .
+```
+
+command. Have fun!
+
 ## Authors
 
 * **[Martin Kondor](https://github.com/MartinKondor)**
