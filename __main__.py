@@ -6,16 +6,11 @@ from enum import Enum
 import pygame
 
 from src.config import CONFIG
+from src.screens.screen import Screens
 from src.screens.main_menu import MainMenuScreen
 from src.screens.loading import LoadingScreen
-
-
-class Screens(Enum):
-    EXIT = 0
-    LOADING = 1
-    MAIN_MENU = 2
-    SETTINGS = 3
-    GAME = 4
+from src.screens.game import GameScreen
+from src.screens.settings import SettingsScreen
 
 
 def check_events():
@@ -45,7 +40,7 @@ if __name__ == "__main__":
     else:
         screen = pygame.display.set_mode(screen_size)
 
-    # pygame.display.set_icon(pygame.image.load(CONFIG.BASE_FOLDER + 'icon.png'))
+    pygame.display.set_icon(pygame.image.load(CONFIG.BASE_FOLDER + 'images/icon.png'))
     pygame.display.set_caption('Leap Of Time')
     pygame.mouse.set_visible(1)
     game_clock = pygame.time.Clock()
@@ -59,7 +54,7 @@ if __name__ == "__main__":
     current_screen = LoadingScreen()
 
 
-    while check_events():
+    while current_screen_enum != Screens.EXIT and check_events():
 
         if current_screen_enum == Screens.GAME:
             screen.fill((0, 0, 0))
@@ -74,9 +69,15 @@ if __name__ == "__main__":
                 current_screen = LoadingScreen()
             elif current_screen_enum == Screens.MAIN_MENU:
                 current_screen = MainMenuScreen()
+            elif current_screen_enum == Screens.SETTINGS:
+                current_screen = SettingsScreen()
+            elif current_screen_enum == Screens.GAME:
+                current_screen = GameScreen()
 
             last_screen_enum = current_screen_enum
 
         game_clock.tick(CONFIG.FPS_LIMIT)
         pygame.display.update()
         pygame.display.flip()
+
+    pygame.quit()

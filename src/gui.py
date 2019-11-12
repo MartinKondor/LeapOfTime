@@ -5,7 +5,7 @@ from enum import Enum
 
 import pygame
 
-from config import CONFIG
+from src.config import CONFIG
 
 
 class ButtonState(Enum):
@@ -18,7 +18,7 @@ class ButtonState(Enum):
 class Button:
 
     def __init__(self, x_pos, y_pos, label, width=None, height=None,
-                font_color=(250, 250, 255), outline_color=(200, 200, 255),
+                font_color=(22, 22, 22,), outline_color=(200, 50, 40),
                 outline_thickness=8, font_family=None):
         self.state = ButtonState.NORMAL
         self.x_pos = x_pos
@@ -29,10 +29,10 @@ class Button:
         self.outline_thickness = outline_thickness
 
         self.outline_color = outline_color
-        self.clicked_outline_color = (255 - outline_color[0], 255 - outline_color[1], 255 - outline_color[2])
+        self.clicked_outline_color = (250, 220, 110,)
 
         self.font_color = font_color
-        self.hover_font_color = (255 - font_color[0], 255 - font_color[1], 255 - font_color[2])
+        self.hover_font_color = font_color
         self.label_sprite = None
         self.hover_label_sprite = None
         self.set_label(label, font_family)
