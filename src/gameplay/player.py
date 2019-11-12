@@ -28,6 +28,13 @@ class Player:
         else:
             self.x_speed = 0
 
+        if pressed_keys[CONFIG.KEY_DOWN]:
+            self.y_speed += CONFIG.BASE_SPEED
+        elif pressed_keys[CONFIG.KEY_UP]:
+            self.y_speed -= CONFIG.BASE_SPEED
+        else:
+            self.y_speed = 0
+
         # Check max speed
         if self.x_speed > self.max_speed:
             self.x_speed = self.max_speed
