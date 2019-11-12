@@ -9,7 +9,9 @@ To run the game you just need to run the
 python .
 ```
 
-command. Have fun!
+command.
+
+Have fun!
 
 ## Authors
 
