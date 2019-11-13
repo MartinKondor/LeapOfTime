@@ -38,11 +38,22 @@ class Player:
         # Check max speed
         if self.x_speed > self.max_speed:
             self.x_speed = self.max_speed
-        if self.x_speed < -self.max_speed:
-            self.x_speed = -self.max_speed
+        if self.y_speed < -self.max_speed:
+            self.y_speed = -self.max_speed
 
         # Apply changes
-        self.x_pos += self.x_speed
-        self.y_pos += self.y_speed
         self.camera_x = self.x_pos - CONFIG.WINDOW_WIDTH / 2
         self.camera_y = self.y_pos - CONFIG.WINDOW_HEIGHT / 2
+
+        # Do not let the user see the corner of the map
+        if self.camera_x < 0:
+            self.camera_x = 0
+        else:
+            self.x_pos += self.x_speed
+
+        if self.camera_y < 0:
+            self.camera_y = 0
+        else:
+            self.y_pos += self.y_speed
+
+        print((self.camera_x, self.camera_y), (self.x_pos, self.y_pos), (self.x_speed, self.y_speed))

@@ -12,8 +12,8 @@ from src.gameplay.tileset import Tileset
 class Map:
 
     def __init__(self):
-        self.layers = []
         self.tileset = None
+        self.layers = []
 
         # Load the map for the correct level
         map_file = open(CONFIG.BASE_FOLDER + 'maps/' + CONFIG.CURRENT_LEVEL + '.map')
@@ -44,7 +44,9 @@ class Map:
                     self.layers.append([])
                     continue
                 elif ch == '}':
-                    self.layers[-1] = [[int(num.strip()) for num in line.split(',') if num.strip()] for line in current_token.splitlines() if line]
+
+                    # -1 to make tiled maps useable
+                    self.layers[-1] = [[int(num.strip()) - 1 for num in line.split(',') if num.strip()] for line in current_token.splitlines() if line]
                     continue
 
                 current_token += ch
@@ -62,11 +64,11 @@ class Map:
             layer_width = len(layer[0])
             layer_height = len(layer)
 
-            start_x = player.camera_x / 32 - 2
+            start_x = player.camera_x / 32 - 1
             if start_x < 0:
                 start_x = 0
             
-            start_y = player.camera_y / 32 - 2
+            start_y = player.camera_y / 32 - 1
             if start_y < 0:
                 start_y = 0
 
@@ -91,9 +93,3 @@ class Map:
                         break
 
                     screen.blit(self.tileset.tiles[tile], (x * self.tileset.tile_size[0] - player.camera_x, y * self.tileset.tile_size[1] - player.camera_y,))
-        
-        return
-        for layer in self.layers:  # Draw layers
-            for row in layer:
-                for tile_index in row:
-                    screen.blit(self.tileset.tiles[tile_index], (0, 0,))
