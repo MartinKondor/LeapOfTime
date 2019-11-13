@@ -69,5 +69,5 @@ class Player:
         if self.camera_y <= 0 and self.y_speed <= 0:
             self.camera_y = 0
 
-        print('Camera:', (self.camera_x, self.camera_y), 'Pos:', (self.x_pos, self.y_pos), 'Speed:', (self.x_speed, self.y_speed))
+        # print('Camera:', (self.camera_x, self.camera_y), 'Pos:', (self.x_pos, self.y_pos), 'Speed:', (self.x_speed, self.y_speed))
         self.body.display(screen, self)
