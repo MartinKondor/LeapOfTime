@@ -36,18 +36,18 @@ class GameScreen(Screen):
         self.in_game_exit_button = Button(96, CONFIG.WINDOW_HEIGHT - 96 - button_margin, label='EXIT')
 
     def display_game(self, screen):
-        self.map.display(self.player, screen)
-        self.player.display(screen)
+        self.map.display(screen, self.player)
+        self.player.display(screen, self.map)
 
         if pygame.key.get_pressed()[pygame.locals.K_ESCAPE]:
-    
+
             # Save game screenshot as a background
             pygame.image.save(screen, CONFIG.BASE_FOLDER + '/images/screenshot.png')
             self.in_game_menu_bg = pygame.image.load(CONFIG.BASE_FOLDER + '/images/screenshot.png')
             self.in_game_menu_bg.set_alpha(150)
-
             self.subscreen = GameSubScreen.IN_GAME_MENU
-            return Screens.GAME
+            
+        return Screens.GAME
 
     def display_in_game_menu(self, screen):
         screen.blit(self.in_game_menu_bg, (0, 0))

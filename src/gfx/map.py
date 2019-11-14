@@ -52,6 +52,7 @@ class Map:
                 current_token += ch
 
         map_file.close()
+        self.layer_size = (self.tileset.tile_size[0] / 2 * len(self.layers[0][0]), self.tileset.tile_size[1] / 2 * len(self.layers[0]),)
 
     def parse_key_value(self, line):
         key, value = line.split('=')
@@ -59,7 +60,7 @@ class Map:
         value = value.strip().split('"')[1]
         return key, value
 
-    def display(self, player, screen):
+    def display(self, screen, player):
         for layer in self.layers:
             layer_width = len(layer[0])
             layer_height = len(layer)

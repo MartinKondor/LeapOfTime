@@ -26,7 +26,7 @@ class Player:
         self.camera_x = x_pos
         self.camera_y = y_pos
 
-    def display(self, screen):
+    def display(self, screen, map):
         pressed_keys = pygame.key.get_pressed()
 
         # Move on keypress
@@ -63,11 +63,23 @@ class Player:
         self.camera_x = self.x_pos - CONFIG.WINDOW_WIDTH / 2
         self.camera_y = self.y_pos - CONFIG.WINDOW_HEIGHT / 2
 
-        # TODO: Do not let the user see the corner of the map
-        if self.camera_x <= 0 and self.x_speed <= 0:
+        # Do not let the user see the corner of the map
+        if self.camera_x <= 0:
             self.camera_x = 0
-        if self.camera_y <= 0 and self.y_speed <= 0:
+        if self.camera_y <= 0:
             self.camera_y = 0
+        if self.camera_x >= map.layer_size[0]:
+            self.camera_x = map.layer_size[0]
+        if self.camera_y >= map.layer_size[1]:
+            self.camera_y = map.layer_size[1]
+
+        # TODO: Do not let the user go out from the map
+        if self.x_pos + map.tileset.tile_size[0] < 0:
+            self.x_pos = 0
+            self.x_speed = 0
+        if self.y_pos + map.tileset.tile_size[1] < 0:
+            self.y_pos = 0
+            self.y_speed = 0
 
         # print('Camera:', (self.camera_x, self.camera_y), 'Pos:', (self.x_pos, self.y_pos), 'Speed:', (self.x_speed, self.y_speed))
         self.body.display(screen, self)
