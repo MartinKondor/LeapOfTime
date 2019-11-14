@@ -18,6 +18,7 @@ class AnimationDirection(IntEnum):
 class Animation:
 
     def __init__(self, file_name, anim_size=(64, 64,)):
+        self.anim_size = anim_size
         self.frames = []
         self.max_frame = 2
         self.frame_index = 0

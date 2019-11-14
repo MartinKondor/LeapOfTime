@@ -47,6 +47,7 @@ class Config:
 
         self.BG_COLOR = (100, 200, 150,)
         self.BASE_SPEED = 0.5
+        self.TALK_BOX_FONT_SIZE = round(self.CHARACTER_SIZE / 1.5)
 
     def load(self, file_name):
         file = open(file_name, 'r')
@@ -86,6 +87,7 @@ class Config:
                 self.CURRENT_LEVEL = parts[1]
 
     def load_fonts(self):
+        self.text_box_font = pygame.font.Font(self.BASE_FOLDER + 'fonts/PressStart2P-Regular.ttf', self.TALK_BOX_FONT_SIZE)
         self.gui_font = pygame.font.Font(self.BASE_FOLDER + 'fonts/knewave.ttf', self.CHARACTER_SIZE)
         self.readable_font = pygame.font.Font(self.BASE_FOLDER + 'fonts/FreeSans.ttf', self.CHARACTER_SIZE)
         self.background_image = pygame.image.load(self.BASE_FOLDER + 'images/bg.png')

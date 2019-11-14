@@ -7,6 +7,7 @@ import pygame
 
 from src.config import CONFIG
 from src.gfx.tileset import Tileset
+from src.gfx.map_layer import MapLayer
 
 
 class Map:
@@ -14,20 +15,18 @@ class Map:
     def __init__(self):
         self.tileset = None
         self.layers = []
+        self.layer_size = (0, 0,)
 
         # Load the map for the correct level
         map_file = open(CONFIG.BASE_FOLDER + 'maps/' + CONFIG.CURRENT_LEVEL + '.map')
         current_token = ''
+        layer_will_be_solid = False
 
         for line in map_file.read().splitlines():
             for ch in line + '\n':
-
-                # Ignore comments
-                if ch == '#':
+                if ch == '#':  # Ignore comments
                     break
-
-                # Ignore whitespace
-                if (not ch or ch.isspace()) and ch != '\n':
+                if (not ch or ch.isspace()) and ch != '\n':  # Ignore whitespace
                     continue
 
                 if ch == '=':
@@ -40,27 +39,40 @@ class Map:
                         self.tileset = Tileset(CONFIG.BASE_FOLDER + 'tilesets/' + value)
                     break
 
+                if ch == '*':
+                    layer_will_be_solid = True
+                    continue
+
+                # Layers
                 if ch == '{':
                     self.layers.append([])
                     continue
                 elif ch == '}':
-
-                    # -1 to make tiled maps useable
-                    self.layers[-1] = [[int(num.strip()) - 1 for num in line.split(',') if num.strip()] for line in current_token.splitlines() if line]
+                    self.layers[-1] = MapLayer([[int(num.strip()) - 1 for num in line.split(',') if num.strip()] for line in current_token.splitlines() if line], is_solid=layer_will_be_solid)
                     continue
 
                 current_token += ch
 
         map_file.close()
+        self.layers = self.layers[::-1]
         self.layer_size = (self.tileset.tile_size[0] / 2 * len(self.layers[0][0]), self.tileset.tile_size[1] / 2 * len(self.layers[0]),)
 
     def parse_key_value(self, line):
         key, value = line.split('=')
         key = key.strip()
-        value = value.strip().split('"')[1]
+
+        if '"' in value:
+            value = value.strip().split('"')[1]
+        else:
+            value = value.strip()
+        
         return key, value
 
     def display(self, screen, player):
+        """
+        Draw the tiles what the user can see.
+        """
+
         for layer in self.layers:
             layer_width = len(layer[0])
             layer_height = len(layer)

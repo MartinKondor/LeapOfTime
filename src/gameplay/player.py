@@ -3,13 +3,16 @@ Player class for playable charachers.
 """
 import pygame
 
+from src.gameplay.entity import Entity
 from src.config import CONFIG
 from src.gfx.animation import Animation, AnimationDirection
 
 
-class Player:
+class Player(Entity):
     
-    def __init__(self):
+    def __init__(self, entity_id, animation_file_name):
+        self.entity_id = entity_id
+        self.animation_file_name = animation_file_name
         self.camera_x = 0
         self.camera_y = 0
         self.x_pos = 0
@@ -17,7 +20,7 @@ class Player:
         self.x_speed = 0
         self.y_speed = 0
         self.max_speed = 7
-        self.body = Animation(CONFIG.BASE_FOLDER + 'gfx/player/player.gif')
+        self.body = Animation(animation_file_name)
         self.direction = AnimationDirection.DOWN
 
     def set_pos(self, x_pos, y_pos):
