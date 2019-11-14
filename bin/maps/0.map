@@ -2,11 +2,10 @@ tileset = "basic.png"
 
 # Layers are starting with the { and ending with the } character
 # the -1 is ignored
-{
-    1, 1, 1, 1
-    1, 1, 1, 1
-    1, 1, 1, 1
-    1, 1, 1, 1   
+
+*{
+    193, 193
+    193, 193
 }
 
 {

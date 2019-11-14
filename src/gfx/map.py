@@ -19,49 +19,46 @@ class Map:
 
         # Load the map for the correct level
         map_file = open(CONFIG.BASE_FOLDER + 'maps/' + CONFIG.CURRENT_LEVEL + '.map')
-        current_token = ''
         layer_will_be_solid = False
+        in_layer = False
 
         for line in map_file.read().splitlines():
+            if not line:
+                continue
+
             for ch in line + '\n':
                 if ch == '#':  # Ignore comments
                     break
                 if (not ch or ch.isspace()) and ch != '\n':  # Ignore whitespace
                     continue
+                if ch == '{':
+                    in_layer = True
+                    self.layers.append([])
+                    continue
+                if ch == '}':
+                    self.layers[-1] = MapLayer(self.layers[-1], is_solid=layer_will_be_solid)
+                    in_layer = False
+                    layer_will_be_solid = False
+                    continue
 
-                if ch == '=':
-                    current_token = ''
-                    key, value = self.parse_key_value(line)
-
-                    # Set the given key
-                    if key == 'tileset':
-                        # Load the tileset
+                if in_layer and not ch.isspace():
+                    self.layers[-1].append([int(l.strip()) - 1 for l in line.strip().split(',') if l.strip()])  # Parse line
+                    break
+                elif ch == '*':
+                    layer_will_be_solid = True
+                    continue
+                elif ch == '=':
+                    key, value = self.parse_key_value(line)  # Set the given key
+                    if key == 'tileset':  # Load the tileset
                         self.tileset = Tileset(CONFIG.BASE_FOLDER + 'tilesets/' + value)
                     break
 
-                if ch == '*':
-                    layer_will_be_solid = True
-                    continue
-
-                # Layers
-                if ch == '{':
-                    self.layers.append([])
-                    continue
-                elif ch == '}':
-                    self.layers[-1] = MapLayer([[int(num.strip()) - 1 for num in line.split(',') if num.strip()] for line in current_token.splitlines() if line], is_solid=layer_will_be_solid)
-                    continue
-
-                current_token += ch
-
         map_file.close()
+        
         self.layers = self.layers[::-1]
-
-        biggest_layer_x = max([max([len(l) for l in layer]) for layer in self.layers])
-        biggest_layer_y = max([len(layer) for layer in self.layers])
-
-        self.layer_size = (  # Set the biggest layer as a reference
-            self.tileset.tile_size[0] / 2 * biggest_layer_x,
-            self.tileset.tile_size[1] / 2 * biggest_layer_y,
+        self.layer_size = (
+            self.tileset.tile_size[0] / 2 * max([len(layer[0]) for layer in self.layers]),
+            self.tileset.tile_size[1] / 2 * max([len(layer) for layer in self.layers])
         )
 
     def parse_key_value(self, line: str):
@@ -112,4 +109,4 @@ class Map:
                     elif x > end_x:
                         break
 
-                    screen.blit(self.tileset.tiles[tile], (x * self.tileset.tile_size[0] - player.camera_x, y * self.tileset.tile_size[1] - player.camera_y,))
+                    screen.blit(self.tileset.tiles[tile], (x * self.tileset.tile_size[0] - player.camera_x, y * self.tileset.tile_size[0] - player.camera_y,))
