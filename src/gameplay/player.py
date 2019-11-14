@@ -10,7 +10,7 @@ from src.gfx.animation import Animation, AnimationDirection
 
 class Player(Entity):
     
-    def __init__(self, entity_id, animation_file_name):
+    def __init__(self, entity_id: int, animation_file_name: str):
         self.entity_id = entity_id
         self.animation_file_name = animation_file_name
         self.camera_x = 0
@@ -23,13 +23,13 @@ class Player(Entity):
         self.body = Animation(animation_file_name)
         self.direction = AnimationDirection.DOWN
 
-    def set_pos(self, x_pos, y_pos):
+    def set_pos(self, x_pos: float, y_pos: float):
         self.x_pos = x_pos
         self.y_pos = y_pos
         self.camera_x = x_pos
         self.camera_y = y_pos
 
-    def display(self, screen, map):
+    def display(self, screen: pygame.Surface, map):
         pressed_keys = pygame.key.get_pressed()
 
         # Move on keypress

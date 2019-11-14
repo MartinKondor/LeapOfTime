@@ -3,12 +3,13 @@ TalkBox for showing talking or loud thinking.
 """
 import pygame
 
+from src.gameplay.entity import Entity
 from src.config import CONFIG
 
 
 class TalkBox:
     
-    def __init__(self, entity_id, text):
+    def __init__(self, entity_id: int, text: str):
         """
         :param entity_id: int the entity that has this box
         :param text: str of the text to be drawn
@@ -25,7 +26,7 @@ class TalkBox:
         self.x_pos = 42 + self.width / 2
         self.y_pos = -12 * len(lines) + self.height / 2
 
-    def display(self, screen, entity, player):
+    def display(self, screen: pygame.Surface, entity: Entity, player):
         x_pos = entity.x_pos - player.camera_x + self.x_pos - self.width / 2
         y_pos = entity.y_pos - player.camera_y + self.y_pos - self.height / 2
 

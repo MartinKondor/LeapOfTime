@@ -19,7 +19,7 @@ class LoadingScreen(Screen):
         pygame_logo_size = self.pygame_logo.get_rect().size
         self.pygame_logo = pygame.transform.scale(self.pygame_logo, (pygame_logo_size[0] // 4, pygame_logo_size[1] // 4))
 
-    def display(self, screen):
+    def display(self, screen: pygame.Surface):
         screen.fill((100, 200, 150,))
         
         logo_size = self.logo.get_size()

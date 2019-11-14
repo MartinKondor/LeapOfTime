@@ -29,7 +29,7 @@ class GameScreen(Screen):
         self.in_game_resume_button = Button(96, CONFIG.WINDOW_HEIGHT - 96 - 2 * button_margin, label='RESUME')
         self.in_game_exit_button = Button(96, CONFIG.WINDOW_HEIGHT - 96 - button_margin, label='EXIT')
 
-    def display_game(self, screen):
+    def display_game(self, screen: pygame.Surface):
         self.game_play.display(screen)
 
         if pygame.key.get_pressed()[pygame.locals.K_ESCAPE]:
@@ -42,7 +42,7 @@ class GameScreen(Screen):
             
         return Screens.GAME
 
-    def display_in_game_menu(self, screen):
+    def display_in_game_menu(self, screen: pygame.Surface):
         screen.blit(self.in_game_menu_bg, (0, 0))
         self.in_game_resume_button.display(screen)
         self.in_game_exit_button.display(screen)
@@ -54,7 +54,7 @@ class GameScreen(Screen):
             return Screens.GAME
         return Screens.GAME
 
-    def display(self, screen):
+    def display(self, screen: pygame.Surface):
         if self.subscreen == GameSubScreen.GAME:
             return self.display_game(screen)
         else:

@@ -4,11 +4,11 @@ MapLayer class for storing class layers.
 
 class MapLayer:
 
-    def __init__(self, layer, is_solid=None):
-        self.layer = layer
+    def __init__(self, layer: list, is_solid: bool=None):
+        self.layer = tuple(tuple(l) for l in layer)
         self.is_solid = False if is_solid is None else is_solid
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: int):
         return self.layer[key]
 
     def __iter__(self):

@@ -21,11 +21,14 @@ class GamePlay:
         self.last_entity_id = 0
 
         # Set player to the center of the map
-        self.player.set_pos((len(self.map.layers[0][0]) * self.map.tileset.tile_size[1]) // 2,
-                            (len(self.map.layers[0]) * self.map.tileset.tile_size[1]) // 2)
+        self.player.set_pos(
+            (len(self.map.layers[0][0]) * self.map.tileset.tile_size[1]) // 2,
+            (len(self.map.layers[0]) * self.map.tileset.tile_size[1]) // 2
+        )
         
         self.talk_boxes = [
             # Stores the talk boxes
+            TalkBox(0, 'I need BASS.')
         ]
         self.entities = [
             # Entites that must be drawn
@@ -34,7 +37,7 @@ class GamePlay:
             # Elements that must be drawn
         ]  
 
-    def get_entity(self, entity_id):
+    def get_entity(self, entity_id: int):
         if entity_id == 0:
             return self.player
 
@@ -55,7 +58,7 @@ class GamePlay:
 
         # Draw graphical elements
         for drawable_element in self.drawable_elements:
-            drawable_element.display(screen)
+            pass
 
         # Draw entities
         for entity in self.entities:

@@ -154,7 +154,7 @@ KEYBOARD = {
 
 class SettingsScreen(Screen):
 
-    def __init__(self, last_screen_enum=None):
+    def __init__(self, last_screen_enum: Screens=None):
         self.logo = pygame.image.load(CONFIG.BASE_FOLDER + 'images/logo.png')  # 45x12
         self.logo = pygame.transform.scale(self.logo, (5 * 45, 5 * 12,))
         self.logo_size = self.logo.get_rect().size
@@ -177,7 +177,7 @@ class SettingsScreen(Screen):
         ]
         self.back_button = Button(50, CONFIG.WINDOW_HEIGHT - 4 * CONFIG.CHARACTER_SIZE, label='BACK')
 
-    def check_for_choosing_key(self, button, label):
+    def check_for_choosing_key(self, button: Button, label: str):
         if button.state == ButtonState.RELEASED:
             in_key_choosing = True
 
@@ -204,7 +204,7 @@ class SettingsScreen(Screen):
                     CONFIG.save()
                     break
 
-    def display(self, screen):
+    def display(self, screen: pygame.Surface):
         screen.blit(self.logo, (CONFIG.WINDOW_WIDTH - 1.5 * self.logo_size[0], self.logo_size[1] // 2,))
 
         for label in self.labels:

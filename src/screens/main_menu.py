@@ -20,7 +20,7 @@ class MainMenuScreen(Screen):
         self.settings_button = Button(96, CONFIG.WINDOW_HEIGHT - 96 - button_margin, 'SETTINGS')
         self.exit_button = Button(96, CONFIG.WINDOW_HEIGHT - 96, 'EXIT')
 
-    def display(self, screen):
+    def display(self, screen: pygame.Surface):
         screen.blit(self.logo, (CONFIG.WINDOW_WIDTH - 1.5 * self.logo_size[0], self.logo_size[1] // 2,))
         self.new_game_button.display(screen)
         self.settings_button.display(screen)

@@ -5,6 +5,7 @@ import time
 
 import pygame
 
+from src.gameplay.entity import Entity
 from enum import IntEnum
 
 
@@ -17,7 +18,7 @@ class AnimationDirection(IntEnum):
 
 class Animation:
 
-    def __init__(self, file_name, anim_size=(64, 64,)):
+    def __init__(self, file_name: str, anim_size: tuple=(64, 64,)):
         self.anim_size = anim_size
         self.frames = []
         self.max_frame = 2
@@ -38,7 +39,7 @@ class Animation:
             
             self.frames.append(anim_frames)
 
-    def display(self, screen, entity):
+    def display(self, screen: pygame.Surface, entity: Entity):
         screen.blit(self.get_frame(entity.direction), (entity.x_pos - entity.camera_x, entity.y_pos - entity.camera_y,))
         
         if (time.time() - self.animation_clock) >= (1 / self.animation_frames_per_second):
@@ -48,5 +49,5 @@ class Animation:
             if self.frame_index >= self.max_frame:
                 self.frame_index = 0
 
-    def get_frame(self, direction):
+    def get_frame(self, direction: AnimationDirection):
         return self.frames[direction][self.frame_index]

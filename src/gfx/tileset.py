@@ -6,7 +6,7 @@ import pygame
 
 class Tileset:
 
-    def __init__(self, file_name, tile_size=(16, 16,)):
+    def __init__(self, file_name: str, tile_size: tuple=(16, 16,)):
         self.tiles = []
         self.tile_size = tile_size
 

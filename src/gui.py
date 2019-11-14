@@ -17,9 +17,16 @@ class ButtonState(Enum):
 
 class Button:
 
-    def __init__(self, x_pos, y_pos, label, width=None, height=None,
-                font_color=(22, 22, 22,), outline_color=(200, 50, 40),
-                outline_thickness=8, font_family=None):
+    def __init__(self, x_pos: int,
+                y_pos: int,
+                label: str,
+                width: int=None,
+                height: int=None,
+                font_color: tuple=(22, 22, 22,),
+                outline_color: tuple=(200, 50, 40),
+                outline_thickness: int=8,
+                font_family: pygame.font.Font=None):
+
         self.state = ButtonState.NORMAL
         self.x_pos = x_pos
         self.y_pos = y_pos
@@ -37,13 +44,13 @@ class Button:
         self.hover_label_sprite = None
         self.set_label(label, font_family)
      
-    def set_label(self, label, font_family=None):
+    def set_label(self, label: str, font_family: pygame.font.Font=None):
         self.label_sprite = font_family.render(label, 1, self.font_color) \
             if font_family is not None else CONFIG.gui_font.render(label, 1, self.font_color)
         self.hover_label_sprite = font_family.render(label, 1, self.hover_font_color) \
             if font_family is not None else CONFIG.gui_font.render(label, 1, self.hover_font_color)
 
-    def display(self, screen):
+    def display(self, screen: pygame.Surface):
         mouse_pos = pygame.mouse.get_pos()
 
         if mouse_pos[0] > self.x_pos and mouse_pos[1] > self.y_pos and mouse_pos[0] < self.x_pos + self.width and mouse_pos[1] < self.y_pos + self.height:

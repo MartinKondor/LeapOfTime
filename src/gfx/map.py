@@ -55,9 +55,16 @@ class Map:
 
         map_file.close()
         self.layers = self.layers[::-1]
-        self.layer_size = (self.tileset.tile_size[0] / 2 * len(self.layers[0][0]), self.tileset.tile_size[1] / 2 * len(self.layers[0]),)
 
-    def parse_key_value(self, line):
+        biggest_layer_x = max([max([len(l) for l in layer]) for layer in self.layers])
+        biggest_layer_y = max([len(layer) for layer in self.layers])
+
+        self.layer_size = (  # Set the biggest layer as a reference
+            self.tileset.tile_size[0] / 2 * biggest_layer_x,
+            self.tileset.tile_size[1] / 2 * biggest_layer_y,
+        )
+
+    def parse_key_value(self, line: str):
         key, value = line.split('=')
         key = key.strip()
 
@@ -68,7 +75,7 @@ class Map:
         
         return key, value
 
-    def display(self, screen, player):
+    def display(self, screen: pygame.Surface, player):
         """
         Draw the tiles what the user can see.
         """
@@ -77,19 +84,19 @@ class Map:
             layer_width = len(layer[0])
             layer_height = len(layer)
 
-            start_x = player.camera_x / 32 - 1
+            start_x = player.camera_x / self.tileset.tile_size[0] - 1
             if start_x < 0:
                 start_x = 0
             
-            start_y = player.camera_y / 32 - 1
+            start_y = player.camera_y / self.tileset.tile_size[1] - 1
             if start_y < 0:
                 start_y = 0
 
-            end_x = (CONFIG.WINDOW_WIDTH + player.camera_x) / 32
+            end_x = (CONFIG.WINDOW_WIDTH + player.camera_x) / self.tileset.tile_size[0]
             if end_x < layer_width - 1:
                 end_x = layer_width - 1
 
-            end_y = (CONFIG.WINDOW_HEIGHT + player.camera_y) / 32
+            end_y = (CONFIG.WINDOW_HEIGHT + player.camera_y) / self.tileset.tile_size[1]
             if end_y < layer_height - 1:
                 end_y = layer_height - 1
 

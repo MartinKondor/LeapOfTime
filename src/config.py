@@ -9,7 +9,7 @@ from pygame import locals
 
 class Config:
 
-    def __init__(self, file_name):
+    def __init__(self, file_name: str):
         """
         Loading config form the given file
         """
@@ -49,7 +49,7 @@ class Config:
         self.BASE_SPEED = 0.5
         self.TALK_BOX_FONT_SIZE = round(self.CHARACTER_SIZE / 1.5)
 
-    def load(self, file_name):
+    def load(self, file_name: str):
         file = open(file_name, 'r')
         lines = file.read()
         file.close()
@@ -92,7 +92,7 @@ class Config:
         self.readable_font = pygame.font.Font(self.BASE_FOLDER + 'fonts/FreeSans.ttf', self.CHARACTER_SIZE)
         self.background_image = pygame.image.load(self.BASE_FOLDER + 'images/bg.png')
 
-    def save(self, file_name=None):
+    def save(self, file_name: str=None):
         if file_name is not None:
             self.file_name = file_name
 

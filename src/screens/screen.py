@@ -1,6 +1,8 @@
 """
 Abstract screen object.
 """
+import pygame
+
 from enum import Enum
 
 
@@ -17,7 +19,7 @@ class Screen:
     Represents the abstract screen object
     """
     
-    def display(self, screen):
+    def display(self, screen: pygame.Surface):
         """
         :param screen: pygame.Surface
         :returns: Screen enum value
