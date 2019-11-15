@@ -113,12 +113,12 @@ class Map:
 
                             # Stop the entity from moving above solid layer
                             if entity.x_pos < x_pos + player.camera_x and entity.x_pos > x_pos + player.camera_x - self.tileset.tile_size[0] - entity.body.width / 4 and \
-                                entity.y_pos < y_pos + player.camera_y and entity.y_pos > y_pos + player.camera_y - self.tileset.tile_size[1] - entity.body.height / 3:
+                                entity.y_pos < y_pos + player.camera_y and entity.y_pos > y_pos + player.camera_y - self.tileset.tile_size[1] - entity.body.height / 2:
                                 
                                 x_diff = entity.x_pos - x_pos - player.camera_x + self.tileset.tile_size[0]
                                 y_diff = entity.y_pos - y_pos - player.camera_y + self.tileset.tile_size[1]
 
-                                entity.x_pos += int(x_diff / 4)
-                                entity.y_pos += int(y_diff / 4)
+                                entity.x_pos += round(x_diff / 4)
+                                entity.y_pos += round(y_diff / 4)
 
                     screen.blit(self.tileset.tiles[tile], (x_pos, y_pos,))

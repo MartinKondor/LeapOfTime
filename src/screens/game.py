@@ -6,7 +6,7 @@ from enum import Enum
 
 import pygame
 
-from src.gui import Button,  ButtonState
+from src.gui.button import Button,  ButtonState
 from src.screens.screen import Screen, Screens
 from src.config import CONFIG
 from src.gameplay.game_play import GamePlay

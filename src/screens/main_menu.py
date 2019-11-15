@@ -4,7 +4,7 @@ Main menu screen.
 import pygame
 
 from src.config import CONFIG
-from src.gui import Button, ButtonState
+from src.gui.button import Button,  ButtonState
 from src.screens.screen import Screen, Screens
 
 

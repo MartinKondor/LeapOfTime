@@ -28,6 +28,7 @@ class GamePlay:
 
         self.talk_boxes = [
             # Stores the talk boxes
+            TalkBox(0, 'I need BASS.')
         ]
         self.entities = [
             # Entites that must be drawn

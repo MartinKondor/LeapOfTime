@@ -1,5 +1,5 @@
 """
-GUI elements and utilites.
+Button class, a click and hoverable button.
 """
 from enum import Enum
 
@@ -17,7 +17,8 @@ class ButtonState(Enum):
 
 class Button:
 
-    def __init__(self, x_pos: int,
+    def __init__(self, 
+                x_pos: int,
                 y_pos: int,
                 label: str,
                 width: int=None,

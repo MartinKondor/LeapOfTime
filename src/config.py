@@ -85,6 +85,8 @@ class Config:
                 self.FULLSCREEN = parts[1] == 'True'
             if parts[0] == 'CURRENT_LEVEL':
                 self.CURRENT_LEVEL = parts[1]
+            if parts[0] == 'TALK_BOX_FONT_SIZE':
+                self.TALK_BOX_FONT_SIZE = int(parts[1])
 
     def load_fonts(self):
         self.text_box_font = pygame.font.Font(self.BASE_FOLDER + 'fonts/PressStart2P-Regular.ttf', self.TALK_BOX_FONT_SIZE)

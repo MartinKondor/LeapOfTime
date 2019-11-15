@@ -8,7 +8,7 @@ import pygame
 from pygame import locals as keys
 
 from src.screens.screen import Screen, Screens
-from src.gui import Button, ButtonState
+from src.gui.button import Button, ButtonState
 from src.config import CONFIG
 
 
