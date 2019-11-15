@@ -72,7 +72,7 @@ class Map:
         
         return key, value
 
-    def display(self, screen: pygame.Surface, player):
+    def display(self, screen: pygame.Surface, player, entities):
         """
         Draw the tiles what the user can see.
         """
@@ -97,6 +97,9 @@ class Map:
             if end_y < layer_height - 1:
                 end_y = layer_height - 1
 
+            x_pos = None
+            y_pos = None
+
             for y, tiles in enumerate(layer):
                 if y < start_y:
                     continue
@@ -109,4 +112,19 @@ class Map:
                     elif x > end_x:
                         break
 
-                    screen.blit(self.tileset.tiles[tile], (x * self.tileset.tile_size[0] - player.camera_x, y * self.tileset.tile_size[0] - player.camera_y,))
+                    x_pos = x * self.tileset.tile_size[0] - player.camera_x
+                    y_pos = y * self.tileset.tile_size[1] - player.camera_y
+
+                    # TODO: Check intersection with entites if the layer is "solid"
+                    if layer.is_solid:
+                        for entity in entities + [player]:                            
+                            break
+                            
+                            en_x_pos = entity.x_pos + entity.body.width / 4
+                            en_y_pos = entity.y_pos + entity.body.height / 4
+
+
+                            if en_x_pos < x_pos + 2 * self.tileset.tile_size[0] and en_y_pos < y_pos + 2 * self.tileset.tile_size[1]:
+                                print('YES')
+
+                    screen.blit(self.tileset.tiles[tile], (x_pos, y_pos,))

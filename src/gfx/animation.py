@@ -19,7 +19,8 @@ class AnimationDirection(IntEnum):
 class Animation:
 
     def __init__(self, file_name: str, anim_size: tuple=(64, 64,)):
-        self.anim_size = anim_size
+        self.width = anim_size[0]
+        self.height = anim_size[1]
         self.frames = []
         self.max_frame = 2
         self.frame_index = 0
@@ -33,7 +34,7 @@ class Animation:
             anim_frames = []
 
             for i in range(self.max_frame):
-                anim_img.set_clip(pygame.Rect(i * anim_size[0], j * anim_size[1], anim_size[0], anim_size[1]))
+                anim_img.set_clip(pygame.Rect(i * self.width, j * self.height, self.width, self.height))
                 img = anim_img.subsurface(anim_img.get_clip())
                 anim_frames.append(pygame.transform.scale(img, (42, 42,)))
             

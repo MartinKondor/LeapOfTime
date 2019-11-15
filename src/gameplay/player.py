@@ -12,16 +12,17 @@ class Player(Entity):
     
     def __init__(self, entity_id: int, animation_file_name: str):
         self.entity_id = entity_id
-        self.animation_file_name = animation_file_name
-        self.camera_x = 0
-        self.camera_y = 0
         self.x_pos = 0
         self.y_pos = 0
         self.x_speed = 0
         self.y_speed = 0
         self.max_speed = 7
-        self.body = Animation(animation_file_name)
+        self.animation_file_name = animation_file_name
+        self.body = Animation(animation_file_name, (64, 64,))
         self.direction = AnimationDirection.DOWN
+
+        self.camera_x = 0
+        self.camera_y = 0
 
     def set_pos(self, x_pos: float, y_pos: float):
         self.x_pos = x_pos
@@ -78,11 +79,20 @@ class Player(Entity):
 
         # TODO: Do not let the user go out from the map
         if self.x_pos + map.tileset.tile_size[0] < 0:
-            self.x_pos = 0
+            self.x_pos = -map.tileset.tile_size[0]
             self.x_speed = 0
         if self.y_pos + map.tileset.tile_size[1] < 0:
-            self.y_pos = 0
+            self.y_pos = -map.tileset.tile_size[1]
             self.y_speed = 0
+        """
+        if self.x_pos - 2 * self.body.width - map.tileset.tile_size[0] > 1.5 * self.camera_x:
+            self.x_pos = 1.5 * self.camera_x + (2 * self.body.width - map.tileset.tile_size[0])
+            self.x_speed = 0
+        if self.y_pos + self.body.height / 2 + map.tileset.tile_size[1] > 1.5 * self.camera_y:
+            self.y_pos = 1.5 * self.camera_y - (self.body.height / 2 + map.tileset.tile_size[1])
+            self.y_speed = 0
+        """
 
         # print('Camera:', (self.camera_x, self.camera_y), 'Pos:', (self.x_pos, self.y_pos), 'Speed:', (self.x_speed, self.y_speed))
+
         self.body.display(screen, self)

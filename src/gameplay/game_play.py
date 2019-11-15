@@ -6,7 +6,7 @@ import pygame
 from src.config import CONFIG
 from src.gfx.map import Map
 from src.gameplay.player import Player
-from src.gfx.talk_box import TalkBox
+from src.gfx.map_elements.talk_box import TalkBox
 
 
 class GamePlay:
@@ -28,7 +28,7 @@ class GamePlay:
         
         self.talk_boxes = [
             # Stores the talk boxes
-            TalkBox(0, 'I need BASS.')
+            TalkBox(0, '...')
         ]
         self.entities = [
             # Entites that must be drawn
@@ -47,7 +47,7 @@ class GamePlay:
         return None
 
     def display(self, screen: pygame.Surface):
-        self.map.display(screen, self.player)
+        self.map.display(screen, self.player, self.entities)
         self.player.display(screen, self.map)
 
         if CONFIG.CURRENT_LEVEL == '0':
