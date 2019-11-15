@@ -43,7 +43,7 @@ class Animation:
     def display(self, screen: pygame.Surface, entity: Entity):
         screen.blit(self.get_frame(entity.direction), (entity.x_pos - entity.camera_x, entity.y_pos - entity.camera_y,))
         
-        if (time.time() - self.animation_clock) >= (1 / self.animation_frames_per_second):
+        if (time.time() - self.animation_clock) >= (1 / self.animation_frames_per_second) and entity.x_speed + entity.y_speed != 0:
             self.animation_clock = time.time()
             self.frame_index += 1
 

@@ -19,13 +19,15 @@ class GamePlay:
         # Increased after an entity is created,
         # thus each new entity will get a new id
         self.last_entity_id = 0
-
+        
         # Set player to the center of the map
         self.player.set_pos(self.map.layer_size[0] / 2 - self.player.body.width / 4, self.map.layer_size[1] / 2 - self.player.body.height / 2)
         
+        if CONFIG.CURRENT_LEVEL == '0':
+            self.player.max_speed = 3
+
         self.talk_boxes = [
             # Stores the talk boxes
-            TalkBox(0, '...')
         ]
         self.entities = [
             # Entites that must be drawn
