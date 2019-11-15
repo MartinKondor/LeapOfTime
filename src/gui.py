@@ -22,7 +22,7 @@ class Button:
                 label: str,
                 width: int=None,
                 height: int=None,
-                font_color: tuple=(22, 22, 22,),
+                font_color: tuple=(250, 250, 250,),
                 outline_color: tuple=(200, 50, 40),
                 outline_thickness: int=8,
                 font_family: pygame.font.Font=None):

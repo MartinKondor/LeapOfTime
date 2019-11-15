@@ -49,7 +49,7 @@ if __name__ == '__main__':
     # Loading the current screen
     current_screen_enum = Screens.LOADING
     last_screen_enum = Screens.LOADING
-    current_screen = LoadingScreen()
+    current_screen = GameScreen()  # LoadingScreen()
 
 
     while current_screen_enum != Screens.EXIT and check_events():

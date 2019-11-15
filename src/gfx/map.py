@@ -109,11 +109,16 @@ class Map:
                     # Check intersection with entites if the layer is solid
                     if layer.is_solid:
                         for entity in entities + [player]:
-                            break
-                            print((entity.x_pos, entity.y_pos), (x_pos + player.camera_x, y_pos + player.camera_x))
+                            # print((entity.x_pos, entity.y_pos), (x_pos + player.camera_x, y_pos + player.camera_x))
 
-                            # TODO: Stop the entity from moving above solid layer
-                            if entity.x_pos >= x_pos + player.camera_x - 2 * self.tileset.tile_size[0] and entity.x_pos <= x_pos + player.camera_x + self.tileset.tile_size[0] / 2:
-                                print('Above solid')
+                            # Stop the entity from moving above solid layer
+                            if entity.x_pos < x_pos + player.camera_x and entity.x_pos > x_pos + player.camera_x - self.tileset.tile_size[0] - entity.body.width / 4 and \
+                                entity.y_pos < y_pos + player.camera_y and entity.y_pos > y_pos + player.camera_y - self.tileset.tile_size[1] - entity.body.height / 3:
+                                
+                                x_diff = entity.x_pos - x_pos - player.camera_x + self.tileset.tile_size[0]
+                                y_diff = entity.y_pos - y_pos - player.camera_y + self.tileset.tile_size[1]
+
+                                entity.x_pos += int(x_diff / 4)
+                                entity.y_pos += int(y_diff / 4)
 
                     screen.blit(self.tileset.tiles[tile], (x_pos, y_pos,))
