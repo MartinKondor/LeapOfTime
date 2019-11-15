@@ -21,10 +21,7 @@ class GamePlay:
         self.last_entity_id = 0
 
         # Set player to the center of the map
-        self.player.set_pos(
-            (len(self.map.layers[0][0]) * self.map.tileset.tile_size[1]) // 2,
-            (len(self.map.layers[0]) * self.map.tileset.tile_size[1]) // 2
-        )
+        self.player.set_pos(self.map.layer_size[0] / 2 - self.player.body.width / 4, self.map.layer_size[1] / 2 - self.player.body.height / 2)
         
         self.talk_boxes = [
             # Stores the talk boxes

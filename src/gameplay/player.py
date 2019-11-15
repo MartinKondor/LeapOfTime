@@ -72,27 +72,24 @@ class Player(Entity):
             self.camera_x = 0
         if self.camera_y <= 0:
             self.camera_y = 0
-        if self.camera_x >= map.layer_size[0]:
-            self.camera_x = map.layer_size[0]
-        if self.camera_y >= map.layer_size[1]:
-            self.camera_y = map.layer_size[1]
+        if self.camera_x >= map.layer_size[0] - CONFIG.WINDOW_WIDTH:
+            self.camera_x = map.layer_size[0] - CONFIG.WINDOW_WIDTH 
+        if self.camera_y >= map.layer_size[1] - CONFIG.WINDOW_HEIGHT:
+            self.camera_y = map.layer_size[1] - CONFIG.WINDOW_HEIGHT
 
-        # TODO: Do not let the user go out from the map
+        # Do not let the user go out from the map
         if self.x_pos + map.tileset.tile_size[0] < 0:
             self.x_pos = -map.tileset.tile_size[0]
             self.x_speed = 0
         if self.y_pos + map.tileset.tile_size[1] < 0:
             self.y_pos = -map.tileset.tile_size[1]
             self.y_speed = 0
-        """
-        if self.x_pos - 2 * self.body.width - map.tileset.tile_size[0] > 1.5 * self.camera_x:
-            self.x_pos = 1.5 * self.camera_x + (2 * self.body.width - map.tileset.tile_size[0])
+        if self.x_pos > map.layer_size[0] - self.body.width / 2:
+            self.x_pos = map.layer_size[0] - self.body.width / 2
             self.x_speed = 0
-        if self.y_pos + self.body.height / 2 + map.tileset.tile_size[1] > 1.5 * self.camera_y:
-            self.y_pos = 1.5 * self.camera_y - (self.body.height / 2 + map.tileset.tile_size[1])
+        if self.y_pos > map.layer_size[1] - self.body.height / 2:
+            self.y_pos = map.layer_size[1] - self.body.height / 2
             self.y_speed = 0
-        """
 
-        # print('Camera:', (self.camera_x, self.camera_y), 'Pos:', (self.x_pos, self.y_pos), 'Speed:', (self.x_speed, self.y_speed))
-
+        print('Camera:', (self.camera_x, self.camera_y), 'Pos:', (self.x_pos, self.y_pos), 'Speed:', (self.x_speed, self.y_speed))
         self.body.display(screen, self)

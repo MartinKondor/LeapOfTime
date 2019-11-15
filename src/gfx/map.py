@@ -57,8 +57,8 @@ class Map:
         
         self.layers = self.layers[::-1]
         self.layer_size = (
-            self.tileset.tile_size[0] / 2 * max([len(layer[0]) for layer in self.layers]),
-            self.tileset.tile_size[1] / 2 * max([len(layer) for layer in self.layers])
+            self.tileset.tile_size[0] * max([len(layer[0]) for layer in self.layers]),
+            self.tileset.tile_size[1] * max([len(layer) for layer in self.layers])
         )
 
     def parse_key_value(self, line: str):
@@ -78,24 +78,15 @@ class Map:
         """
 
         for layer in self.layers:
-            layer_width = len(layer[0])
-            layer_height = len(layer)
-
             start_x = player.camera_x / self.tileset.tile_size[0] - 1
+            start_y = player.camera_y / self.tileset.tile_size[1] - 1
+            end_x = (CONFIG.WINDOW_WIDTH + player.camera_x) / self.tileset.tile_size[0]
+            end_y = (CONFIG.WINDOW_HEIGHT + player.camera_y) / self.tileset.tile_size[1]
+
             if start_x < 0:
                 start_x = 0
-            
-            start_y = player.camera_y / self.tileset.tile_size[1] - 1
             if start_y < 0:
                 start_y = 0
-
-            end_x = (CONFIG.WINDOW_WIDTH + player.camera_x) / self.tileset.tile_size[0]
-            if end_x < layer_width - 1:
-                end_x = layer_width - 1
-
-            end_y = (CONFIG.WINDOW_HEIGHT + player.camera_y) / self.tileset.tile_size[1]
-            if end_y < layer_height - 1:
-                end_y = layer_height - 1
 
             x_pos = None
             y_pos = None
