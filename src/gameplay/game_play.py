@@ -10,6 +10,7 @@ from src.gfx.map import Map
 from src.gfx.map_elements.talk_box import TalkBox
 from src.gameplay.entities.player import Player
 from src.gameplay.entities.evil_lord import EvilLord
+from src.gameplay.levels.level_0 import level_0
 
 
 class GamePlay:
@@ -17,7 +18,13 @@ class GamePlay:
     def __init__(self):
         self.map = Map()  # Loads the current level
         self.player = Player(0, CONFIG.BASE_FOLDER + 'gfx/player/player.gif')
-        
+        self.show_hud = True
+
+        # Intro variables
+        self.intro_timer = time.time()
+        self.intro_time = 2
+        self.intro_shown = False if not CONFIG.DEBUG else True
+
         # The next entity's id.
         # Increased after an entity is created,
         # thus each new entity will get a new id
@@ -33,6 +40,7 @@ class GamePlay:
         ]
 
         if CONFIG.CURRENT_LEVEL == '0':
+            self.show_hud = False
             self.player.max_speed = 3
             self.player.set_pos(1347, 3857)
         else:
@@ -42,7 +50,7 @@ class GamePlay:
         # Level related
         self.blocked_scenes = []
         self.current_scene = 0
-        self.current_scene_subscene = 0
+        self.current_scene_subscene = 1
         self.current_scene_subscene_timer = time.time()
         self.current_scene_subscene_delay = 0
 
@@ -56,9 +64,23 @@ class GamePlay:
         return None
 
     def display(self, screen: pygame.Surface):
+        if not self.intro_shown:
+            level_str = 'Level ' + str(int(CONFIG.CURRENT_LEVEL) + 1)
+            screen.fill(CONFIG.BG_COLOR)
+            screen.blit(CONFIG.readable_font.render(level_str, 1, (240, 249, 255,)),
+                        (CONFIG.WINDOW_WIDTH / 2 - (len(level_str) * CONFIG.CHARACTER_SIZE / 4), CONFIG.WINDOW_HEIGHT / 2,))
+
+            if time.time() - self.intro_timer >= self.intro_time:
+                self.intro_shown = True
+            return
+
         self.map.display(screen, self.player, self.entities)
         self.player.display(screen, self.map)
-        self.run_level(CONFIG.CURRENT_LEVEL, screen)
+        self.run_level(screen)
+
+        # Display HUD
+        if self.show_hud:
+            pygame.draw.rect(screen, (100, 200, 50,), (3, CONFIG.WINDOW_HEIGHT - 67, 100, 64))
 
         for talk_box in self.talk_boxes:
             if not talk_box.is_clicked:
@@ -74,43 +96,13 @@ class GamePlay:
             entity.camera_y = self.player.camera_y
             entity.display(screen, self.map)
 
-    def run_level(self, level: str, screen: pygame.Surface):
-        if level == '0':
-            if self.current_scene not in self.blocked_scenes and self.current_scene != 1 and \
-                    self.player.y_pos >= 3744.5:
-                self.current_scene = 1
-                self.talk_boxes = []
-                self.talk_boxes.append(TalkBox(0, 'I need to go home ...'))
-            elif self.current_scene not in self.blocked_scenes and self.current_scene != 2 and \
-                    self.player.y_pos < 3744.5 and self.player.y_pos >= 3306.5:
-                self.current_scene = 2
-                self.talk_boxes = []
-                self.talk_boxes.append(TalkBox(0, 'I feel dizzy ...'))
-                self.player.max_speed = 2
-            elif self.current_scene not in self.blocked_scenes and self.current_scene != 3 and \
-                    self.player.y_pos <= 3443:
-                self.current_scene = 3
-                self.blocked_scenes.append(3)
-                self.talk_boxes = []
+    def run_level(self, screen: pygame.Surface):
+        if CONFIG.DEBUG:
+            print('CONFIG.CURRENT_LEVEL:', CONFIG.CURRENT_LEVEL)
+            print('self.current_scene:', self.current_scene)
+            print('self.current_scene_subscene:', self.current_scene_subscene)
 
-            # Run scene with the evil person
-            if self.current_scene == 3:
-                self.player.max_speed = 0
-
-                if self.current_scene_subscene == 0:
-                    self.current_scene_subscene += 1
-                    
-                    self.last_entity_id += 1
-                    self.entities.append(EvilLord(self.last_entity_id, CONFIG.BASE_FOLDER + 'gfx/evil_lord/evil_lord.gif'))
-                    self.entities[-1].set_pos(self.player.x_pos, self.player.y_pos - 75)
-
-                    self.talk_boxes.append(TalkBox(0, 'What is this?\nWho are you?'))
-                    
-                    self.current_scene_subscene_delay = 3
-                    self.current_scene_subscene_timer = time.time()
-                elif self.current_scene_subscene == 1 and time.time() - self.current_scene_subscene_timer >= self.current_scene_subscene_delay:
-                    self.current_scene_subscene += 1
-                    self.talk_boxes = []
-                    self.talk_boxes.append(TalkBox(self.last_entity_id, 'Second'))
-                    self.current_scene_subscene_delay = 4
-                    self.current_scene_subscene_timer = time.time()
+        if CONFIG.CURRENT_LEVEL == '0':
+            if level_0(self, screen):
+                CONFIG.CURRENT_LEVEL = '1'
+                print('asd')

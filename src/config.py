@@ -21,7 +21,10 @@ class Config:
         else:
             self.load(file_name)  # Start reading config from file
 
+        self.DEBUG = True
+
     def set_default(self):
+        self.DEBUG = False
 
         # Set default attributes
         self.WINDOW_WIDTH = 800
