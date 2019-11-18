@@ -95,6 +95,7 @@ class Config:
         self.text_box_font = pygame.font.Font(self.BASE_FOLDER + 'fonts/PressStart2P-Regular.ttf', self.TALK_BOX_FONT_SIZE)
         self.gui_font = pygame.font.Font(self.BASE_FOLDER + 'fonts/knewave.ttf', self.CHARACTER_SIZE)
         self.readable_font = pygame.font.Font(self.BASE_FOLDER + 'fonts/FreeSans.ttf', self.CHARACTER_SIZE)
+        self.hud_font = pygame.font.Font(self.BASE_FOLDER + 'fonts/FreeSans.ttf', 13)
         self.background_image = pygame.image.load(self.BASE_FOLDER + 'images/bg.png')
 
     def save(self, file_name: str=None):

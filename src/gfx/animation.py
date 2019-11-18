@@ -36,13 +36,13 @@ class Animation:
             for i in range(self.max_frame):
                 anim_img.set_clip(pygame.Rect(i * self.width, j * self.height, self.width, self.height))
                 img = anim_img.subsurface(anim_img.get_clip())
-                anim_frames.append(pygame.transform.scale(img, (42, 42,)))
+                anim_frames.append(pygame.transform.scale(img, (32, 32,)))
                 # anim_frames.append(img)
             
             self.frames.append(anim_frames)
 
-        self.width = 42
-        self.height = 42
+        self.width = 32
+        self.height = 32
 
     def display(self, screen: pygame.Surface, entity: Entity):
         screen.blit(self.get_frame(entity.direction), (entity.x_pos - entity.camera_x, entity.y_pos - entity.camera_y,))
