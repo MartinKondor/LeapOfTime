@@ -22,13 +22,13 @@ class Animation:
         self.width = anim_size[0]
         self.height = anim_size[1]
         self.frames = []
-        self.max_frame = 2
+        self.max_frame = 1
         self.frame_index = 0
         self.animation_frames_per_second = 4
         self.animation_clock = time.time()
 
         anim_img = pygame.image.load(file_name)
-        anim_img.set_colorkey((255, 255, 255),)
+        anim_img.set_colorkey((0, 255, 0),)
 
         for j in range(4):
             anim_frames = []
