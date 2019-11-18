@@ -3,7 +3,7 @@ TalkBox for showing talking or loud thinking.
 """
 import pygame
 
-from src.gameplay.entity import Entity
+from src.gameplay.entities.entity import Entity
 from src.config import CONFIG
 
 
@@ -16,6 +16,7 @@ class TalkBox:
         """
         lines = text.split('\n')
 
+        self.is_clicked = False
         self.entity_id = entity_id
         self.text_sprites = [CONFIG.text_box_font.render(line, 1, (37, 37, 37,)) for line in lines]
         self.padding = 7
@@ -26,15 +27,18 @@ class TalkBox:
         self.x_pos = 42 + self.width / 2
         self.y_pos = -12 * len(lines) + self.height / 2
 
-    def display(self, screen: pygame.Surface, entity: Entity, player):
-        x_pos = entity.x_pos - player.camera_x + self.x_pos - self.width / 2
-        y_pos = entity.y_pos - player.camera_y + self.y_pos - self.height / 2
+    def display(self, screen: pygame.Surface, entity: Entity):
+        x_pos = entity.x_pos - entity.camera_x + self.x_pos - self.width / 2
+        y_pos = entity.y_pos - entity.camera_y + self.y_pos - self.height / 2
 
         # Hover effect
         mouse_pos = pygame.mouse.get_pos()
 
         if mouse_pos[0] > x_pos and mouse_pos[1] > y_pos and mouse_pos[0] < x_pos + self.width and mouse_pos[1] < y_pos + self.height:
             pygame.draw.rect(screen, (37, 37, 37,), (x_pos - 1, y_pos - 1, self.width + 1, self.height + 1))
+
+            if pygame.mouse.get_pressed()[0] == 1:
+                self.is_clicked = True
         else:
             pygame.draw.rect(screen, (37, 37, 37,), (x_pos + 1, y_pos + 1, self.width + 1, self.height + 1)) 
         

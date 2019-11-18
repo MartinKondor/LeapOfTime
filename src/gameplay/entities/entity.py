@@ -8,6 +8,8 @@ class Entity:
     y_pos: float = 0
     x_speed: float = 0
     y_speed: float = 0
+    camera_x: float = 0
+    camera_y: float = 0
     max_speed: float = 7
     animation_file_name: str = None
     body = None  # Animation class

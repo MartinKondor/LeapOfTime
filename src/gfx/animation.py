@@ -5,7 +5,7 @@ import time
 
 import pygame
 
-from src.gameplay.entity import Entity
+from src.gameplay.entities.entity import Entity
 from enum import IntEnum
 
 
@@ -28,7 +28,7 @@ class Animation:
         self.animation_clock = time.time()
 
         anim_img = pygame.image.load(file_name)
-        anim_img.set_colorkey((0, 255, 0),)
+        anim_img.set_colorkey((255, 255, 255),)
 
         for j in range(4):
             anim_frames = []
