@@ -112,13 +112,27 @@ class Map:
                             # print((entity.x_pos, entity.y_pos), (x_pos + player.camera_x, y_pos + player.camera_x))
 
                             # Stop the entity from moving above solid layer
-                            if entity.x_pos < x_pos + player.camera_x and entity.x_pos > x_pos + player.camera_x - self.tileset.tile_size[0] - entity.body.width / 4 and \
-                                entity.y_pos < y_pos + player.camera_y and entity.y_pos > y_pos + player.camera_y - self.tileset.tile_size[1] - entity.body.height / 2:
-                                
-                                
+                            if entity.x_pos < x_pos + player.camera_x + entity.body.width / 4 and \
+                                entity.x_pos > x_pos + player.camera_x - self.tileset.tile_size[0] - entity.body.width / 4 and \
+                                entity.y_pos < y_pos + player.camera_y + entity.body.height / 4 and \
+                                entity.y_pos > y_pos + player.camera_y - self.tileset.tile_size[1] - entity.body.height / 4:
+
                                 entity.x_speed = 0
                                 entity.y_speed = 0
 
+                                """
+                                entity.x_pos += entity.x_pos - (x_pos + player.camera_x - self.tileset.tile_size[0] / 2)
+                                entity.y_pos += entity.y_pos - (y_pos + player.camera_y - self.tileset.tile_size[1] / 2)
+                                """
+                                
+                                """
+                                x_dist = entity.x_pos - (x_pos + player.camera_x - self.tileset.tile_size[0] / 2)
+                                y_dist = entity.x_pos - (y_pos + player.camera_y - self.tileset.tile_size[1] / 2)
+                                
+                                entity.x_pos = x_pos + player.camera_x + entity.body.width / 4
+                                entity.y_pos = y_pos + player.camera_y + entity.body.height / 4
+                                """
+                                
                                 """
                                 x_diff = entity.x_pos - x_pos - player.camera_x + self.tileset.tile_size[0]
                                 y_diff = entity.y_pos - y_pos - player.camera_y + self.tileset.tile_size[1]

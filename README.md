@@ -1,4 +1,5 @@
-# leap-of-time
+# LeapOfTime
+
 Leap of time is a small python based game.
 
 ## Usage
