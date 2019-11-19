@@ -62,6 +62,7 @@ class Player(Entity):
         if self.y_speed < -self.max_speed:
             self.y_speed = -self.max_speed
 
+        self.collision_detection(map)
         self.x_pos += self.x_speed
         self.y_pos += self.y_speed
         self.camera_x = self.x_pos - CONFIG.WINDOW_WIDTH / 2
@@ -92,5 +93,4 @@ class Player(Entity):
             self.y_speed = 0
 
         # print('Camera:', (self.camera_x, self.camera_y), 'Pos:', (self.x_pos, self.y_pos), 'Speed:', (self.x_speed, self.y_speed))
-        
         self.body.display(screen, self)

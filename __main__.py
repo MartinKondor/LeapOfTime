@@ -33,6 +33,7 @@ if __name__ == '__main__':
         exit(1)
 
     # Starting the game
+    os.environ["SDL_VIDEO_CENTERED"] = '1'
     pygame.init()
     screen_size = (CONFIG.WINDOW_WIDTH, CONFIG.WINDOW_HEIGHT,)
 
@@ -105,7 +106,7 @@ if __name__ == '__main__':
             pygame.mixer.music.play()
 
         game_clock.tick(CONFIG.FPS_LIMIT)
-        # print('FPS:', int(game_clock.get_fps()))
+        print('FPS:', int(game_clock.get_fps()))
         pygame.display.update()
         pygame.display.flip()
 

@@ -24,9 +24,9 @@ class GamePlay:
         self.hud_elements = []
         self.hud_width = 64
         self.hud_height = 32
-        self.hud_game_time_sprite = CONFIG.hud_font.render(self.game_time, 1, (137, 136, 147,))
+        self.hud_game_time_sprite = CONFIG.hud_font.render(self.game_time, 1, (147, 146, 157,))
         hud_img = pygame.image.load(CONFIG.BASE_FOLDER + 'gfx/hud/hud.png').convert()
-        hud_img.set_alpha(240)
+        hud_img.set_alpha(220)
         hud_img.set_colorkey((0, 255, 0,))
 
         for x in range(3):
