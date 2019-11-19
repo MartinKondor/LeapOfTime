@@ -92,4 +92,5 @@ class Player(Entity):
             self.y_speed = 0
 
         # print('Camera:', (self.camera_x, self.camera_y), 'Pos:', (self.x_pos, self.y_pos), 'Speed:', (self.x_speed, self.y_speed))
+        
         self.body.display(screen, self)

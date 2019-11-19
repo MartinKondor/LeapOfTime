@@ -1,6 +1,9 @@
 """
 Main file for starting the game.
 """
+import os
+import random as r
+
 import pygame
 
 from src.config import CONFIG
@@ -46,11 +49,25 @@ if __name__ == '__main__':
     # Load fonts
     CONFIG.load_fonts()
 
+    # Load songs
+    already_played_song_indices = []
+    current_song_index = 0
+    songs = []
+
+    for song in os.listdir(CONFIG.BASE_FOLDER + 'music'):
+        parts = song.split('.')
+        if parts[-1] == 'ogg' or parts[-1] == 'mp3':
+            songs.append(CONFIG.BASE_FOLDER + 'music/' + song)
+
+    # Play the first song
+    pygame.mixer.music.load(songs[current_song_index])
+    pygame.mixer.music.set_volume(0.01 * CONFIG.MASTER_VOLUME)
+    pygame.mixer.music.play()
+
     # Loading the current screen
     current_screen_enum = Screens.LOADING
     last_screen_enum = Screens.LOADING
     current_screen = GameScreen()  # LoadingScreen()
-
 
     while current_screen_enum != Screens.EXIT and check_events():
         if current_screen_enum == Screens.GAME:
@@ -72,6 +89,20 @@ if __name__ == '__main__':
                 current_screen = GameScreen()
 
             last_screen_enum = current_screen_enum
+
+        # Play the songs
+        if not pygame.mixer.music.get_busy():
+            already_played_song_indices.append(current_song_index)
+            current_song_index += 1
+
+            if current_song_index >= len(songs):
+                current_song_index = 0
+                already_played_song_indices = []
+            
+            pygame.mixer.music.stop()
+            pygame.mixer.music.set_volume(0.01 * CONFIG.MASTER_VOLUME)
+            pygame.mixer.music.load(songs[current_song_index])
+            pygame.mixer.music.play()
 
         game_clock.tick(CONFIG.FPS_LIMIT)
         # print('FPS:', int(game_clock.get_fps()))

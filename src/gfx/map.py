@@ -111,34 +111,26 @@ class Map:
                         for entity in entities + [player]:
                             # print((entity.x_pos, entity.y_pos), (x_pos + player.camera_x, y_pos + player.camera_x))
 
+                            # Draw collision boxes
+                            pygame.draw.rect(screen, (255, 0, 0,), pygame.rect.Rect((entity.x_pos - player.camera_x, entity.y_pos - player.camera_y,), self.tileset.tile_size))
+
                             # Stop the entity from moving above solid layer
-                            if entity.x_pos < x_pos + player.camera_x + entity.body.width / 4 and \
-                                entity.x_pos > x_pos + player.camera_x - self.tileset.tile_size[0] - entity.body.width / 4 and \
-                                entity.y_pos < y_pos + player.camera_y + entity.body.height / 4 and \
-                                entity.y_pos > y_pos + player.camera_y - self.tileset.tile_size[1] - entity.body.height / 4:
+                            if entity.x_pos + entity.x_speed <= x_pos + player.camera_x and \
+                                    entity.x_pos + entity.x_speed + entity.body.width / 2 >= x_pos + player.camera_x and \
+                                    entity.y_pos + entity.y_speed <= y_pos + player.camera_y and \
+                                    entity.y_pos + entity.y_speed + entity.body.height >= y_pos + player.camera_y:
+
+                                if entity.x_speed < 0:  # Left
+                                    entity.x_pos = x_pos + player.camera_x
+                                elif entity.x_speed > 0:  # Right
+                                    entity.x_pos = x_pos + player.camera_x - entity.body.width / 2
+
+                                if entity.y_speed < 0:  # Up
+                                    entity.y_pos = y_pos + player.camera_y
+                                elif entity.y_speed > 0:  # Down
+                                    entity.y_pos = y_pos + player.camera_y - entity.body.height
 
                                 entity.x_speed = 0
                                 entity.y_speed = 0
-
-                                """
-                                entity.x_pos += entity.x_pos - (x_pos + player.camera_x - self.tileset.tile_size[0] / 2)
-                                entity.y_pos += entity.y_pos - (y_pos + player.camera_y - self.tileset.tile_size[1] / 2)
-                                """
-                                
-                                """
-                                x_dist = entity.x_pos - (x_pos + player.camera_x - self.tileset.tile_size[0] / 2)
-                                y_dist = entity.x_pos - (y_pos + player.camera_y - self.tileset.tile_size[1] / 2)
-                                
-                                entity.x_pos = x_pos + player.camera_x + entity.body.width / 4
-                                entity.y_pos = y_pos + player.camera_y + entity.body.height / 4
-                                """
-                                
-                                """
-                                x_diff = entity.x_pos - x_pos - player.camera_x + self.tileset.tile_size[0]
-                                y_diff = entity.y_pos - y_pos - player.camera_y + self.tileset.tile_size[1]
-
-                                entity.x_pos += round(x_diff / 3)
-                                entity.y_pos += round(y_diff / 3)
-                                """
 
                     screen.blit(self.tileset.tiles[tile], (x_pos, y_pos,))
