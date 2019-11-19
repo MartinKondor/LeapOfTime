@@ -31,6 +31,7 @@ class Player(Entity):
         self.camera_y = y_pos
 
     def display(self, screen: pygame.Surface, map):
+        # print('Camera:', (self.camera_x, self.camera_y), 'Pos:', (self.x_pos, self.y_pos), 'Speed:', (self.x_speed, self.y_speed))
         pressed_keys = pygame.key.get_pressed()
 
         # Move on keypress
@@ -92,5 +93,4 @@ class Player(Entity):
             self.y_pos = map.layer_size[1] - self.body.height / 2
             self.y_speed = 0
 
-        # print('Camera:', (self.camera_x, self.camera_y), 'Pos:', (self.x_pos, self.y_pos), 'Speed:', (self.x_speed, self.y_speed))
         self.body.display(screen, self)

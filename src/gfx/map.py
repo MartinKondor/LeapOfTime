@@ -15,13 +15,13 @@ import lib.PAdLib.shadow as shadow
 
 class Map:
 
-    def __init__(self):
+    def __init__(self, file_name):
         self.tileset = None
         self.layers = []
         self.layer_size = (0, 0,)
 
         # Load the map for the correct level
-        map_file = open(CONFIG.BASE_FOLDER + 'maps/' + CONFIG.CURRENT_LEVEL + '.map')
+        map_file = open(file_name)
         layer_will_be_solid = False
         in_layer = False
 
