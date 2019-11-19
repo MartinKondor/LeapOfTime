@@ -9,6 +9,9 @@ from src.config import CONFIG
 from src.gfx.tileset import Tileset
 from src.gfx.map_layer import MapLayer
 
+import lib.PAdLib.occluder as occluder
+import lib.PAdLib.shadow as shadow
+
 
 class Map:
 
@@ -77,6 +80,11 @@ class Map:
         Draw the tiles what the user can see.
         """
 
+        """
+        shad = shadow.Shadow()
+        occluders = []
+        """
+
         for layer in self.layers:
             start_x = player.camera_x / self.tileset.tile_size[0] - 1
             start_y = player.camera_y / self.tileset.tile_size[1] - 1
@@ -100,4 +108,35 @@ class Map:
                     elif x > end_x:
                         break
 
+                    """
+                    if layer.is_solid:
+                        xp = x * self.tileset.tile_size[0] - player.camera_x
+                        yp = y * self.tileset.tile_size[1] - player.camera_y
+                        occluders.append(
+                            occluder.Occluder([[xp, yp], [xp + self.tileset.tile_size[0], yp], [xp + self.tileset.tile_size[0], yp + self.tileset.tile_size[1]], [xp, yp + self.tileset.tile_size[1]]])
+                        )
+                    """
+
                     screen.blit(self.tileset.tiles[tile], (x * self.tileset.tile_size[0] - player.camera_x, y * self.tileset.tile_size[1] - player.camera_y,))
+
+        """
+        surf_lighting = pygame.Surface(screen.get_size())
+        surf_falloff = pygame.image.load(CONFIG.BASE_FOLDER + '../lib/PAdLib/examples/light_falloff100.png').convert()
+
+        shad.set_occluders(occluders)
+        shad.set_radius(100.0)
+        mask, draw_pos = shad.get_mask_and_position(False)
+        mask.blit(surf_falloff, (0, 0), special_flags=pygame.locals.BLEND_MULT)
+        
+        draw_pos = list(draw_pos)
+        draw_pos[0] = CONFIG.WINDOW_WIDTH / 2 - 50
+        draw_pos[1] = CONFIG.WINDOW_HEIGHT / 2 - 50
+        draw_pos = tuple(draw_pos)
+
+        surf_lighting.fill((77, 77, 77))
+        surf_lighting.blit(mask, draw_pos, special_flags=pygame.locals.BLEND_MAX)
+        screen.blit(surf_lighting, (0, 0,), special_flags=pygame.locals.BLEND_MULT)
+
+        # for occ in occluders:
+        #     pygame.draw.lines(screen, (255, 255, 255), True, occ.points)
+        """

@@ -62,6 +62,9 @@ class GamePlay:
         if CONFIG.CURRENT_LEVEL == '0':
             self.player.max_speed = 4
             self.player.set_pos(1347, 3857)
+        if CONFIG.CURRENT_LEVEL == '1':
+            self.player.max_speed = 4
+            # self.player.set_pos(1347, 3857)
         else:
             # Set player to the center of the map
             self.player.set_pos(self.map.layer_size[0] / 2 - self.player.body.width / 4, self.map.layer_size[1] / 2 - self.player.body.height / 2)
@@ -114,6 +117,8 @@ class GamePlay:
                 entity.display(screen, self.map)
 
     def show_hud(self, screen: pygame.Surface):
+        
+        # Draw HUD
         screen.blit(self.hud_elements[0], (0, CONFIG.WINDOW_HEIGHT - self.hud_height,))
         screen.blit(self.hud_elements[1], (self.hud_width, CONFIG.WINDOW_HEIGHT - self.hud_height,))
         screen.blit(self.hud_elements[2], (CONFIG.WINDOW_WIDTH - self.hud_width, CONFIG.WINDOW_HEIGHT - self.hud_height,))

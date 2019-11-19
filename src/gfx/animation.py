@@ -22,7 +22,7 @@ class Animation:
         self.width = anim_size[0]
         self.height = anim_size[1]
         self.frames = []
-        self.max_frame = 1
+        self.max_frame = 4
         self.frame_index = 0
         self.animation_frames_per_second = 4
         self.animation_clock = time.time()

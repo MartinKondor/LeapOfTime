@@ -58,5 +58,8 @@ class Entity:
                         self.y_speed + self.y_pos - self.camera_y > y_pos - 2 * map.tileset.tile_size[1]:
                             
                             # Stop the entity from moving
-                            self.x_speed = 0
-                            self.y_speed = 0
+                            if self.x_speed != 0:
+                                self.x_speed = 0
+                            
+                            if self.y_speed != 0:
+                                self.y_speed = 0
