@@ -1,6 +1,6 @@
 <p align="center">
-    <img width="400" class="img-responsive" alt="Day." title="Become a Patron!" src="bin/images/readme_day.png">
-    <img width="400" class="img-responsive" alt="Day." title="Become a Patron!" src="bin/images/readme_night.png">
+    <img width="400" class="img-responsive" alt="Day image." title="Daytime in the game." src="bin/images/readme_day.png">
+    <img width="400" class="img-responsive" alt="Night image." title="Nighttime in the game." src="bin/images/readme_night.png">
 </p>
 
 # LeapOfTime
