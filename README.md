@@ -1,3 +1,8 @@
+<p align="center">
+    <img width="400" class="img-responsive" alt="Day." title="Become a Patron!" src="bin/images/readme_day.png">
+    <img width="400" class="img-responsive" alt="Day." title="Become a Patron!" src="bin/images/readme_night.png">
+</p>
+
 # LeapOfTime
 
 Leap of time is a small python based game.

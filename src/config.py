@@ -51,6 +51,7 @@ class Config:
         self.BG_COLOR = (100, 200, 150,)
         self.BASE_SPEED = 0.5
         self.TALK_BOX_FONT_SIZE = round(self.CHARACTER_SIZE / 1.5)
+        self.OBJECTIVE_FONT_SIZE = 14
 
     def load(self, file_name: str):
         file = open(file_name, 'r')
@@ -60,7 +61,7 @@ class Config:
         lines = lines.splitlines()
 
         for line in lines:
-            parts = line.split('=')
+            parts = [p.strip() for p in line.split('=')]
 
             if parts[0] == 'WINDOW_WIDTH':
                 self.WINDOW_WIDTH = int(parts[1])
@@ -92,6 +93,7 @@ class Config:
                 self.TALK_BOX_FONT_SIZE = int(parts[1])
 
     def load_fonts(self):
+        self.objective_font = pygame.font.Font(self.BASE_FOLDER + 'fonts/Tomorrow-Bold.ttf', self.OBJECTIVE_FONT_SIZE)
         self.text_box_font = pygame.font.Font(self.BASE_FOLDER + 'fonts/PressStart2P-Regular.ttf', self.TALK_BOX_FONT_SIZE)
         self.gui_font = pygame.font.Font(self.BASE_FOLDER + 'fonts/knewave.ttf', self.CHARACTER_SIZE)
         self.readable_font = pygame.font.Font(self.BASE_FOLDER + 'fonts/FreeSans.ttf', self.CHARACTER_SIZE)

@@ -16,4 +16,7 @@ class Level0(Level):
         self.player = Player(0, CONFIG.BASE_FOLDER + 'gfx/player/player.gif')
         self.game_time = '2019-12-01'
         self.player.max_speed = 4
-        self.player.set_pos(1347, 3857)
+        self.player.set_pos(1354, 3854)
+
+        # Adding objectives
+        self.add_objective('Find your house.', (0, 10, 0, 10,))

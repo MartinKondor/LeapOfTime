@@ -28,6 +28,6 @@ class LoadingScreen(Screen):
         
         pygame.display.update()
         pygame.display.flip()
-        time.sleep(1.618)
+        time.sleep(1.618 if not CONFIG.DEBUG else 0)
 
         return Screens.MAIN_MENU

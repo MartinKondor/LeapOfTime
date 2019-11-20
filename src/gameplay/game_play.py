@@ -16,7 +16,7 @@ class GamePlay:
         if CONFIG.CURRENT_LEVEL == '0':
             from src.gameplay.levels.level_0 import Level0
             self.level = Level0()
-        if CONFIG.CURRENT_LEVEL == '1':
+        elif CONFIG.CURRENT_LEVEL == '1':
             from src.gameplay.levels.level_1 import Level1
             self.level = Level1()
         else:

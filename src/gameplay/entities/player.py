@@ -20,7 +20,6 @@ class Player(Entity):
         self.animation_file_name = animation_file_name
         self.body = Animation(animation_file_name, (64, 64,))
         self.direction = AnimationDirection.DOWN
-
         self.camera_x = 0
         self.camera_y = 0
 

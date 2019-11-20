@@ -68,7 +68,7 @@ if __name__ == '__main__':
     # Loading the current screen
     current_screen_enum = Screens.LOADING
     last_screen_enum = Screens.LOADING
-    current_screen = GameScreen()  # LoadingScreen()
+    current_screen = LoadingScreen() if not CONFIG.DEBUG else GameScreen()
 
     while current_screen_enum != Screens.EXIT and check_events():
         if current_screen_enum == Screens.GAME:
@@ -106,7 +106,7 @@ if __name__ == '__main__':
             pygame.mixer.music.play()
 
         game_clock.tick(CONFIG.FPS_LIMIT)
-        # print('FPS:', int(game_clock.get_fps()))
+        print('FPS:', int(game_clock.get_fps()))
         pygame.display.update()
         pygame.display.flip()
 
