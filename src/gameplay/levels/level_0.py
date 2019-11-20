@@ -21,7 +21,7 @@ class Level0(Level):
         self.player.set_pos(1354, 3854)
 
         # Adding objectives
-        self.add_objective('Go home.', (0, 10, 0, 10,))
+        self.add_objective('Find your house.', (961, 1148, 1184, 1261,))
 
     def after_display(self, screen: pygame.Surface):
         pass
