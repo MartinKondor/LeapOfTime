@@ -1,6 +1,8 @@
 """
 0 level.
 """
+import pygame
+
 from src.config import CONFIG
 from src.gameplay.levels.level import Level
 from src.gfx.map import Map
@@ -19,4 +21,7 @@ class Level0(Level):
         self.player.set_pos(1354, 3854)
 
         # Adding objectives
-        self.add_objective('Find your house.', (0, 10, 0, 10,))
+        self.add_objective('Go home.', (0, 10, 0, 10,))
+
+    def after_display(self, screen: pygame.Surface):
+        pass

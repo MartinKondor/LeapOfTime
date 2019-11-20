@@ -106,7 +106,7 @@ if __name__ == '__main__':
             pygame.mixer.music.play()
 
         game_clock.tick(CONFIG.FPS_LIMIT)
-        print('FPS:', int(game_clock.get_fps()))
+        # print('FPS:', int(game_clock.get_fps()))
         pygame.display.update()
         pygame.display.flip()
 

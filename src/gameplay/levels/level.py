@@ -4,6 +4,7 @@ Abstract class for describing levels.
 import pygame
 
 from src.config import CONFIG
+from src.gfx.map_elements.active_tiles import ActiveTiles
 
 
 class Level:
@@ -14,7 +15,7 @@ class Level:
         # The key is the ID of the objective
         # the value is in the format of:
         #
-        # ...
+        # pos: coordinate list of [from x, to x from y, to y]
         #
     }
     game_time: str = '2019-12-01'  # What is the time
@@ -28,7 +29,12 @@ class Level:
     ]
     drawable_elements: list = [
         # Elements that must be drawn
+        # they must have a function of:
+        # display(self, screen: pygame.Surface, player: Player)
     ]
+    can_show_objectives: bool = True
+    objective_window: pygame.Surface = None
+    objective_title: pygame.Surface = CONFIG.objective_font.render('OBJECTIVES', 1, (128, 255, 0,))
 
     def get_entity(self, entity_id: int):
         if entity_id == 0:
@@ -46,6 +52,7 @@ class Level:
             'is_active': is_active
         }
         self.last_objective_id += 1
+        self.drawable_elements.append(ActiveTiles(*pos))
 
     def display(self, screen: pygame.Surface):
         self.map.display(screen, self.player, self.entities)
@@ -56,8 +63,8 @@ class Level:
                 talk_box.display(screen, self.get_entity(talk_box.entity_id))
 
         # Draw graphical elements
-        # for drawable_element in self.drawable_elements:
-        #     pass
+        for drawable_element in self.drawable_elements:
+            drawable_element.display(screen, self.player)
 
         # Draw entities
         for entity in self.entities:
@@ -65,25 +72,31 @@ class Level:
             entity.camera_y = self.player.camera_y
             entity.display(screen, self.map)
 
-        if self.objectives != {}:
-            max_obj_width = max([o['desc'].get_size()[0] for o in self.objectives.values()])
+        if self.objectives and self.can_show_objectives:
 
             # Display the objectives "window"
-            objective_window = pygame.Surface((max_obj_width + 15, 24 + 1.5 * CONFIG.OBJECTIVE_FONT_SIZE * len(self.objectives.values())))
-            objective_window.set_alpha(120)
-            objective_window.fill((7, 7, 7))
-            screen.blit(objective_window, (0, 0,))
+            if self.objective_window is None:
+                max_obj_width = max([o['desc'].get_size()[0] for o in self.objectives.values()])
+                self.objective_window = pygame.Surface((max_obj_width + 15, 24 + 1.5 * CONFIG.OBJECTIVE_FONT_SIZE * len(self.objectives.values())))
+                self.objective_window.set_alpha(120)
+                self.objective_window.fill((7, 7, 7))
 
-            screen.blit(CONFIG.objective_font.render('OBJECTIVES:', 1, (128, 255, 0,)), (5, 5,))
-            there_is_no_active = True
+            screen.blit(self.objective_window, (0, 0,))
+            screen.blit(self.objective_title, (5, 5,))
+            there_is_no_active_objective = True
 
             # Draw objectives
             for i, (objective_id, objective,) in enumerate(self.objectives.items()):
                 if not objective['is_active']:
                     continue
                 
-                there_is_no_active = False
+                there_is_no_active_objective = False
                 screen.blit(objective['desc'], (7, i * 23 + 25,))
 
-            if there_is_no_active:
+            if there_is_no_active_objective:
                 pass
+
+        self.after_display(screen)
+
+    def after_display(self, screen: pygame.Surface):
+        pass
