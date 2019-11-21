@@ -52,7 +52,22 @@ class Level:
             'is_active': is_active
         }
         self.last_objective_id += 1
-        self.drawable_elements.append(ActiveTiles(*pos))
+        self.drawable_elements.append(ActiveTiles(self.last_objective_id - 1, *pos))
+
+    def remove_objective(self, searched_objective_id: int):
+        for objective_id, objective in self.objectives.items():
+            if objective_id == searched_objective_id:
+                objective['is_active'] = False
+                break
+
+        del_index = -1
+        for i, drawable_element in enumerate(self.drawable_elements):
+            if drawable_element.objective_id == searched_objective_id:
+                del_index = i
+                break
+
+        if del_index != -1:
+            del self.drawable_elements[del_index]
 
     def display(self, screen: pygame.Surface):
         self.map.display(screen, self.player, self.entities)
@@ -94,6 +109,7 @@ class Level:
                 screen.blit(objective['desc'], (7, i * 23 + 25,))
 
             if there_is_no_active_objective:
+                # TODO: Step one level up
                 pass
 
         self.after_display(screen)
